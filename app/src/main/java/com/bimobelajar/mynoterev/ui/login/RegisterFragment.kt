@@ -28,7 +28,6 @@ class RegisterFragment : Fragment() {
             val username = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
 
-            // Save credentials to SharedPreferences
             sharedPreferences.edit().apply {
                 putString("username", username)
                 putString("password", password)

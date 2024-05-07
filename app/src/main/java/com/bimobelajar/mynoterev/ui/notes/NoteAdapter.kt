@@ -1,5 +1,4 @@
 package com.bimobelajar.mynoterev.ui.notes
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,7 +15,6 @@ class NoteAdapter(private val onEdit: (Note) -> Unit, private val onDelete: (Not
             override fun areContentsTheSame(oldItem: Note, newItem: Note) = oldItem == newItem
         }
     }
-
     inner class NoteViewHolder(private val binding: NoteItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
@@ -26,12 +24,10 @@ class NoteAdapter(private val onEdit: (Note) -> Unit, private val onDelete: (Not
             binding.deleteButton.setOnClickListener { onDelete(note) }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding = NoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NoteViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = getItem(position)
         holder.bind(note)

@@ -1,5 +1,4 @@
 package com.bimobelajar.mynoterev.ui.notes
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ class NoteFragment : Fragment() {
         binding = FragmentNoteBinding.inflate(inflater, container, false)
 
         noteAdapter = NoteAdapter(
-            onEdit = { note -> /* Navigate to edit */ },
+            onEdit = { note -> }, //edit notenya
             onDelete = { note -> noteViewModel.delete(note) }
         )
         binding.noteRecyclerView.adapter = noteAdapter
@@ -31,11 +30,8 @@ class NoteFragment : Fragment() {
         noteViewModel.allNotes.observe(viewLifecycleOwner, {
             noteAdapter.submitList(it)
         })
-
-        binding.addNoteButton.setOnClickListener {
-            // Navigate to add note fragment
+        binding.addNoteButton.setOnClickListener {//ke add note
         }
-
         return binding.root
     }
 }

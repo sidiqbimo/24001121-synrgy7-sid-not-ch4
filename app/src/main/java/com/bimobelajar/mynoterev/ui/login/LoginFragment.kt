@@ -1,5 +1,4 @@
 package com.bimobelajar.mynoterev.ui.login
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -27,7 +26,6 @@ class LoginFragment : Fragment() {
             val username = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
 
-            // Check credentials from SharedPreferences
             if (sharedPreferences.getString("username", "") == username &&
                 sharedPreferences.getString("password", "") == password) {
                 findNavController().navigate(R.id.action_loginFragment_to_noteFragment)

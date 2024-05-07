@@ -41,6 +41,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
 }
@@ -56,18 +57,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
 
-    implementation ("androidx.room:room-runtime:2.4.0")
-    kapt("groupId:artifactId:1.9.23")
+    implementation ("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
+    implementation("androidx.room:room-ktx:2.4.3")
+    androidTestImplementation("androidx.room:room-testing:2.4.3")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.4.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.4.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
-    android {
-        buildFeatures {
-            dataBinding = true
-        }
-    }
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

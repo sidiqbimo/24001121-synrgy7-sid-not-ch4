@@ -1,5 +1,4 @@
 package com.bimobelajar.mynoterev.data
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
