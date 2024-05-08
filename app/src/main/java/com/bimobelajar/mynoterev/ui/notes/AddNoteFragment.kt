@@ -34,10 +34,10 @@ class AddNoteFragment : Fragment() {
             if (title.isNotBlank() && content.isNotBlank()) {
                 val note = Note(title = title, content = content)
                 viewModel.insert(note)
-                Toast.makeText(context, "Note added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Catatan berhasil ditambahkan", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addNoteFragment_to_noteFragment)
             } else {
-                Toast.makeText(context, "Please fill out all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Pastikan sudah mengisi judul dan isi catatan", Toast.LENGTH_SHORT).show()
             }
         }
 

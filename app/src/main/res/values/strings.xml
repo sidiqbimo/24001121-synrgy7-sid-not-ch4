@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">MyNote Rev</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">MyNote</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_title">Daftar</string>
+    <string name="desc_reg">Buat Akun Anda untuk mulai menggunakan MyNote</string>
+    <string name="et_hint_pass">Kata Sandi</string>
+    <string name="et_hint_uname">Nama Pengguna</string>
+    <string name="login_title">Masuk</string>
+    <string name="login_desc">Selangkah lagi untuk menggunakan MyNote. Masukkan informasi Anda di bawah.</string>
 </resources>

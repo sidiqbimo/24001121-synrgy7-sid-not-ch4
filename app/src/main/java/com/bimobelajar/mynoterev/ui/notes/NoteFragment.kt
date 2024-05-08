@@ -1,5 +1,6 @@
 package com.bimobelajar.mynoterev.ui.notes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,14 @@ class NoteFragment : Fragment() {
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var binding: FragmentNoteBinding
     private lateinit var noteAdapter: NoteAdapter
+    private lateinit var username: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNoteBinding.inflate(inflater, container, false)
-
+        binding.username = username
         noteAdapter = NoteAdapter(
             onEdit = { note -> navigateToEditNoteFragment(note) },
             onDelete = { note -> noteViewModel.delete(note) }
@@ -46,6 +48,13 @@ class NoteFragment : Fragment() {
     private fun navigateToEditNoteFragment(note: Note) {
         val action = NoteFragmentDirections.actionNoteFragmentToEditNoteFragment(note.id)
         findNavController().navigate(action)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        username = sharedPreferences.getString("username", "") ?: ""
     }
 
 }

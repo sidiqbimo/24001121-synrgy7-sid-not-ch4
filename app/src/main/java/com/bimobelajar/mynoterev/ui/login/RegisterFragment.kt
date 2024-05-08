@@ -34,7 +34,7 @@ class RegisterFragment : Fragment() {
                 apply()
             }
 
-            Toast.makeText(requireContext(), "Account Created!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Akun berhasil dibuat!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
