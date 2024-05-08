@@ -23,12 +23,10 @@ class AddNoteFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_note, container, false)
 
-        // Initialize the ViewModel and bind it to the layout
         viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        // Set up the button click listener
         binding.btnAddNote.setOnClickListener {
             val title = binding.etTitle.text.toString()
             val content = binding.etContent.text.toString()

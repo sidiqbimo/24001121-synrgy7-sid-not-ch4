@@ -11,12 +11,16 @@ import com.bimobelajar.mynoterev.R
 import com.bimobelajar.mynoterev.data.Note
 import com.bimobelajar.mynoterev.data.NoteDao
 import com.bimobelajar.mynoterev.data.NoteDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class EditNoteFragment : Fragment() {
     private var noteId: Int? = null
     private lateinit var noteDao:NoteDao
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
+
         val view = inflater.inflate(R.layout.fragment_edit_note, container, false)
 
         val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
@@ -25,41 +29,44 @@ class EditNoteFragment : Fragment() {
 
         noteId = arguments?.getInt("noteId")
 
-        // Retrieve the note data from the database or any other source
         noteId?.let { id ->
-            val note = getNoteById(id)
+            lifecycleScope.launch {
+                val note = getNoteById(id)
 
-            // Populate the EditText views with the note data
-            noteTitleEditText.setText(note?.title)
-            noteContentEditText.setText(note?.content)
+                // Populate the EditText views with the note data
+                noteTitleEditText.setText(note?.title)
+                noteContentEditText.setText(note?.content)
+            }
         }
 
-        noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
 
-        // Set up click listener for the save button
         saveButton.setOnClickListener {
-            // Retrieve the updated note data from the EditText views
             val updatedTitle = noteTitleEditText.text.toString()
             val updatedContent = noteContentEditText.text.toString()
 
             // Update the note with the new data
             noteId?.let { id ->
-                updateNoteData(id, updatedTitle, updatedContent)
+                lifecycleScope.launch {
+                    updateNoteData(id, updatedTitle, updatedContent)
+                }
             }
 
-            // Close the fragment
             requireActivity().supportFragmentManager.popBackStack()
         }
 
         return view
     }
 
-    private fun getNoteById(noteId: Int): Note? {
-        return noteDao.getNoteById(noteId)
+    private suspend fun getNoteById(noteId: Int): Note? {
+        return withContext(Dispatchers.Default) {
+            noteDao.getNoteById(noteId)
+        }
     }
 
-    private fun updateNoteData(noteId: Int, title: String, content: String) {
-        val updatedNote = Note(noteId, title, content)
-        noteDao.update(updatedNote)
+    private suspend fun updateNoteData(noteId: Int, title: String, content: String) {
+        withContext(Dispatchers.Default) {
+            val updatedNote = Note(noteId, title, content)
+            noteDao.update(updatedNote)
+        }
     }
 }

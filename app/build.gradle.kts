@@ -56,6 +56,8 @@ dependencies {
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
     implementation ("androidx.room:room-runtime:2.4.3")
     kapt("androidx.room:room-compiler:2.4.3")
@@ -66,6 +68,8 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.4.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.4.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("com.google.dagger:dagger:2.51.1")
+    kapt("com.google.dagger:dagger-compiler:2.51.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

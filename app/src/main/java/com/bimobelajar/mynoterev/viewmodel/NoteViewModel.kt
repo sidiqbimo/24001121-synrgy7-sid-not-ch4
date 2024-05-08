@@ -35,7 +35,6 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun update(note: Note) = viewModelScope.launch(Dispatchers.IO) { repository.update(note) }
     fun delete(note: Note) = viewModelScope.launch(Dispatchers.IO) { repository.delete(note) }
 
-    // Add setter methods for newTitle and newContent
     fun setNewTitle(title: String) {
         _newTitle.value = title
     }
@@ -45,12 +44,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun convertTitleToString(title: String): String {
-        // Convert the title to a string if needed
         return title
     }
 
     fun convertContentToString(content: String): String {
-        // Convert the content to a string if needed
         return content
     }
 }
