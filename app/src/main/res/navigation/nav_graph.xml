@@ -28,5 +28,17 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.bimobelajar.mynoterev.ui.notes.NoteFragment"
-        tools:layout="@layout/fragment_note" />
+        tools:layout="@layout/fragment_note">
+        <action
+            android:id="@+id/action_noteFragment_to_addNoteFragment2"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.bimobelajar.mynoterev.ui.notes.AddNoteFragment"
+        android:label="AddNoteFragment" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
 </navigation>

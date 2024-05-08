@@ -1,13 +1,16 @@
 package com.bimobelajar.mynoterev.ui.notes
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bimobelajar.mynoterev.databinding.FragmentNoteBinding
 import com.bimobelajar.mynoterev.viewmodel.NoteViewModel
-import com.bimobelajar.mynoterev.data.Note
+import com.bimobelajar.mynoterev.R
+import androidx.recyclerview.widget.LinearLayoutManager
 
 class NoteFragment : Fragment() {
     private lateinit var noteViewModel: NoteViewModel
@@ -21,17 +24,22 @@ class NoteFragment : Fragment() {
         binding = FragmentNoteBinding.inflate(inflater, container, false)
 
         noteAdapter = NoteAdapter(
-            onEdit = { note -> }, //edit notenya
+            onEdit = { note -> /* edit note logic */ },
             onDelete = { note -> noteViewModel.delete(note) }
         )
         binding.noteRecyclerView.adapter = noteAdapter
 
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
-        noteViewModel.allNotes.observe(viewLifecycleOwner, {
-            noteAdapter.submitList(it)
+        noteViewModel.allNotes.observe(viewLifecycleOwner, { notes ->
+            noteAdapter.submitList(notes)
         })
-        binding.addNoteButton.setOnClickListener {//ke add note
+
+        binding.noteRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.addNoteButton.setOnClickListener {
+            findNavController().navigate(R.id.action_noteFragment_to_addNoteFragment2)
         }
+
         return binding.root
     }
 }
