@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
                 sharedPreferences.getString("password", "") == password) {
                 findNavController().navigate(R.id.action_loginFragment_to_noteFragment)
             } else {
-                Toast.makeText(requireContext(), "Invalid credentials!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Username atau password salah", Toast.LENGTH_SHORT).show()
             }
         }
 
