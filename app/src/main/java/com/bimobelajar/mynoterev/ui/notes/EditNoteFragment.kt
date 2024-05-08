@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.lifecycleScope
 import com.bimobelajar.mynoterev.R
 import com.bimobelajar.mynoterev.data.Note
 import com.bimobelajar.mynoterev.data.NoteDao
 import com.bimobelajar.mynoterev.data.NoteDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditNoteFragment : Fragment() {
@@ -30,7 +32,7 @@ class EditNoteFragment : Fragment() {
         noteId = arguments?.getInt("noteId")
 
         noteId?.let { id ->
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val note = getNoteById(id)
 
                 // Populate the EditText views with the note data
