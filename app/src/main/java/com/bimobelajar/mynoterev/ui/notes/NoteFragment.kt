@@ -11,6 +11,7 @@ import com.bimobelajar.mynoterev.databinding.FragmentNoteBinding
 import com.bimobelajar.mynoterev.viewmodel.NoteViewModel
 import com.bimobelajar.mynoterev.R
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bimobelajar.mynoterev.data.Note
 
 class NoteFragment : Fragment() {
     private lateinit var noteViewModel: NoteViewModel
@@ -24,7 +25,7 @@ class NoteFragment : Fragment() {
         binding = FragmentNoteBinding.inflate(inflater, container, false)
 
         noteAdapter = NoteAdapter(
-            onEdit = { note -> /* edit note logic */ },
+            onEdit = { note -> navigateToEditNoteFragment(note) },
             onDelete = { note -> noteViewModel.delete(note) }
         )
         binding.noteRecyclerView.adapter = noteAdapter
@@ -42,4 +43,9 @@ class NoteFragment : Fragment() {
 
         return binding.root
     }
+    private fun navigateToEditNoteFragment(note: Note) {
+        val action = NoteFragmentDirections.actionNoteFragmentToEditNoteFragment(note.id)
+        findNavController().navigate(action)
+    }
+
 }

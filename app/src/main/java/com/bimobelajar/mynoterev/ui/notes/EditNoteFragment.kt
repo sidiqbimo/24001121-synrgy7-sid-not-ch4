@@ -5,56 +5,61 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import com.bimobelajar.mynoterev.R
+import com.bimobelajar.mynoterev.data.Note
+import com.bimobelajar.mynoterev.data.NoteDao
+import com.bimobelajar.mynoterev.data.NoteDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditNoteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditNoteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var noteId: Int? = null
+    private lateinit var noteDao:NoteDao
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_edit_note, container, false)
+
+        val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
+        val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
+        val saveButton = view.findViewById<Button>(R.id.btnSave)
+
+        noteId = arguments?.getInt("noteId")
+
+        // Retrieve the note data from the database or any other source
+        noteId?.let { id ->
+            val note = getNoteById(id)
+
+            // Populate the EditText views with the note data
+            noteTitleEditText.setText(note?.title)
+            noteContentEditText.setText(note?.content)
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_note, container, false)
-    }
+        noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditNoteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditNoteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        // Set up click listener for the save button
+        saveButton.setOnClickListener {
+            // Retrieve the updated note data from the EditText views
+            val updatedTitle = noteTitleEditText.text.toString()
+            val updatedContent = noteContentEditText.text.toString()
+
+            // Update the note with the new data
+            noteId?.let { id ->
+                updateNoteData(id, updatedTitle, updatedContent)
             }
+
+            // Close the fragment
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        return view
+    }
+
+    private fun getNoteById(noteId: Int): Note? {
+        return noteDao.getNoteById(noteId)
+    }
+
+    private fun updateNoteData(noteId: Int, title: String, content: String) {
+        val updatedNote = Note(noteId, title, content)
+        noteDao.update(updatedNote)
     }
 }
